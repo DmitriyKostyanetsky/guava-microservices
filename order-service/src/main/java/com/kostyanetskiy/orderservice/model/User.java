@@ -20,9 +20,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
+    private String password;
     private String phone;
     private String email;
+    private String role;
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
-
 }

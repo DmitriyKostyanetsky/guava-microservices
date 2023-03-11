@@ -11,3 +11,5 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
 server:
   port: 8282
+
+jwt_secret: ORDERSERVICESECRET
