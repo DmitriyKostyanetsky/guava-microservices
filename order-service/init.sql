@@ -5,7 +5,7 @@ create table if not exists usr (
 	email varchar(255)
 );
 
-create table if not exists order (
+create table if not exists delivery_order (
 	id number primary key auto_increment,
 	code varchar(255),
 	created_date date,

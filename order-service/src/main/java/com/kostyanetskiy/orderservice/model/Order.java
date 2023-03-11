@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "order")
+@Table(name = "delivery_order")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,6 +20,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String itemName;
     private String code;
     private String address;
     private String receiver;

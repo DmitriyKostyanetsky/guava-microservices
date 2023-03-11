@@ -33,6 +33,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setAddress(orderRequestCreate.getAddress());
         order.setReceiver(orderRequestCreate.getReceiver());
+        order.setItemName(orderRequestCreate.getItemName());
         order.setCode(code);
         order.setStatus(OrderStatus.CREATED);
         order.setCreatedDate(date);

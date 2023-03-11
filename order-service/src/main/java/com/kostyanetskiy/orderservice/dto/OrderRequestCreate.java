@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequestCreate {
+    private String itemName;
     private String address;
     private String receiver;
 }
