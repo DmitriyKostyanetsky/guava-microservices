@@ -1,4 +1,6 @@
 spring:
+  liquibase:
+    enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5433/postgres
@@ -7,7 +9,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
 server:
   port: 8282

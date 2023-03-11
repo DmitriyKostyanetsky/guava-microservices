@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: rename-table-order
+      author: d.kostyanetskiy
+      changes:
+        - renameTable:
+            newTableName: delivery_order
+            oldTableName: delivery-order
+            schemaName: public

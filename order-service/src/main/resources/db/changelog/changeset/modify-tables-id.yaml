@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: modify-tables-id
+      author: d.kostyanetskiy
+      changes:
+        - modifyDataType:
+            columnName: id
+            newDataType: bigint
+            schemaName: public
+            tableName: delivery_order
+        - modifyDataType:
+            columnName: id
+            newDataType: bigint
+            schemaName: public
+            tableName: usr

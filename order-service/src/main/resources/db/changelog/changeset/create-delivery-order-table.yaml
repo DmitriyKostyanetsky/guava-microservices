@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-delivery-order
+      author: d.kostyanetskiy
+      changes:
+        - createTable:
+            tableName: delivery-order
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: item_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: code
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: address
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: receiver
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(10)
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    foreignKeyName: usr

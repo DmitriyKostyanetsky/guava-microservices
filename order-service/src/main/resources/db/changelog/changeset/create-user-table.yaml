@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user
+      author: d.kostyanetskiy
+      changes:
+        - createTable:
+            tableName: usr
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: email
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(8)

@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: modify-role-size-usr
+      author: d.kostyanetskiy
+      changes:
+        - modifyDataType:
+            columnName: role
+            newDataType: varchar(20)
+            schemaName: public
+            tableName: usr

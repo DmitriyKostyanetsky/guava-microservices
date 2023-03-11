@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: modify-foreign-key-delivery-order-id
+      author: d.kostyanetskiy
+      changes:
+        - modifyDataType:
+            columnName: user_id
+            newDataType: bigint
+            schemaName: public
+            tableName: delivery_order
