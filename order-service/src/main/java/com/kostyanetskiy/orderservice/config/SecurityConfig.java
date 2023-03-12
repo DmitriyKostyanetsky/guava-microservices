@@ -36,7 +36,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
             "/swagger-ui/**"
-            // other public endpoints of your API may be appended to this array
     };
 
     @Override
@@ -73,12 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Add JWT token filter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(personDetailsService)
-//                .passwordEncoder(getPasswordEncoder());
-//    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
