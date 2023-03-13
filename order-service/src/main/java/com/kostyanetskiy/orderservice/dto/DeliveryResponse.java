@@ -1,4 +1,4 @@
-package com.kostyanetskiy.deliveryservice.dto;
+package com.kostyanetskiy.orderservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

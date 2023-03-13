@@ -1,9 +1,6 @@
 package com.kostyanetskiy.orderservice.controller;
 
-import com.kostyanetskiy.orderservice.dto.OrderRequest;
-import com.kostyanetskiy.orderservice.dto.OrderRequestChange;
-import com.kostyanetskiy.orderservice.dto.OrderRequestCreate;
-import com.kostyanetskiy.orderservice.dto.OrderResponse;
+import com.kostyanetskiy.orderservice.dto.*;
 import com.kostyanetskiy.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,4 +39,9 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping(path = "/track")
+    @ResponseStatus(HttpStatus.OK)
+    public DeliveryResponse getOrderByTrackNo(@RequestParam String trackNo) {
+        return orderService.getOrderByTrackNo(trackNo);
+    }
 }

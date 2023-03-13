@@ -145,7 +145,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     private DeliveryResponse buildDeliveryResponse(Delivery delivery) {
         return DeliveryResponse.builder()
                 .deliveryCode(delivery.getTrackNo())
-                .status(delivery.getStatus())
+                .status(delivery.getStatus().name())
                 .orderCode(delivery.getOrderCode())
                 .courierName(delivery.getCourier() == null ? "" : delivery.getCourier().getName())
                 .build();

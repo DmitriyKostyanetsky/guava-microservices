@@ -1,9 +1,6 @@
 package com.kostyanetskiy.orderservice.service.impl;
 
-import com.kostyanetskiy.orderservice.dto.OrderRequestCreate;
-import com.kostyanetskiy.orderservice.dto.OrderRequest;
-import com.kostyanetskiy.orderservice.dto.OrderRequestChange;
-import com.kostyanetskiy.orderservice.dto.OrderResponse;
+import com.kostyanetskiy.orderservice.dto.*;
 import com.kostyanetskiy.orderservice.enums.OrderStatus;
 import com.kostyanetskiy.orderservice.event.OrderPlaceEvent;
 import com.kostyanetskiy.orderservice.event.OrderReceiveEvent;
@@ -19,6 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.sql.Date;
 import java.util.List;
@@ -33,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final KafkaTemplate<String, OrderPlaceEvent> kafkaTemplate;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
     public OrderResponse createOrder(OrderRequestCreate orderRequestCreate) {
@@ -117,6 +116,23 @@ public class OrderServiceImpl implements OrderService {
         return orders.stream()
                 .map(this::createResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public DeliveryResponse getOrderByTrackNo(String trackNo) {
+        DeliveryResponse deliveryResponse = webClientBuilder.build().get()
+                .uri("http://delivery-service/api/v1/delivery/track",
+                        uriBuilder -> uriBuilder.queryParam("trackNo", trackNo).build())
+                .retrieve()
+                .bodyToMono(DeliveryResponse.class)
+                .block();
+
+        return DeliveryResponse.builder()
+                .courierName(deliveryResponse.getCourierName())
+                .deliveryCode(deliveryResponse.getDeliveryCode())
+                .orderCode(deliveryResponse.getOrderCode())
+                .status(deliveryResponse.getStatus())
+                .build();
     }
 
     private List<Order> getUserOrders() {

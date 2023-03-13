@@ -56,7 +56,7 @@ public class CourierServiceImpl implements CourierService {
                 .map(delivery -> DeliveryResponse.builder()
                         .courierName(courier.getName())
                         .deliveryCode(delivery.getTrackNo())
-                        .status(delivery.getStatus())
+                        .status(delivery.getStatus().name())
                         .orderCode(delivery.getOrderCode())
                         .build())
                 .collect(Collectors.toList());
