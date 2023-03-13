@@ -31,4 +31,24 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        if (code != null ? !code.equals(order.code) : order.code != null) return false;
+        if (address != null ? !address.equals(order.address) : order.address != null) return false;
+        return receiver != null ? receiver.equals(order.receiver) : order.receiver == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
+        return result;
+    }
 }

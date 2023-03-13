@@ -38,6 +38,11 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-security-test'
+
+    testImplementation group: 'com.h2database', name: 'h2'
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.hamcrest:hamcrest-all:1.1'
 }
 
 dependencyManagement {
