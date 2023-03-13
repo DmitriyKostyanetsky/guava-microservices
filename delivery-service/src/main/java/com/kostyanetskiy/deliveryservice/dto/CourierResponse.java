@@ -1,7 +1,5 @@
 package com.kostyanetskiy.deliveryservice.dto;
 
-
-import com.kostyanetskiy.deliveryservice.enums.CourierStatus;
 import com.kostyanetskiy.deliveryservice.model.Delivery;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +15,6 @@ import java.util.List;
 public class CourierResponse {
     private String name;
     private String code;
-    private CourierStatus status;
-    private List<Delivery> deliveries;
+    private String status;
+    private List<DeliveryResponse> deliveries;
 }

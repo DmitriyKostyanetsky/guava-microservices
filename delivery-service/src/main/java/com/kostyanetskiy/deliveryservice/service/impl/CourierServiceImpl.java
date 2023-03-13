@@ -2,8 +2,10 @@ package com.kostyanetskiy.deliveryservice.service.impl;
 
 import com.kostyanetskiy.deliveryservice.dto.CourierCreateRequest;
 import com.kostyanetskiy.deliveryservice.dto.CourierResponse;
+import com.kostyanetskiy.deliveryservice.dto.DeliveryResponse;
 import com.kostyanetskiy.deliveryservice.enums.CourierStatus;
 import com.kostyanetskiy.deliveryservice.model.Courier;
+import com.kostyanetskiy.deliveryservice.model.Delivery;
 import com.kostyanetskiy.deliveryservice.repository.CourierRepository;
 import com.kostyanetskiy.deliveryservice.service.CourierService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ public class CourierServiceImpl implements CourierService {
         courier.setName(courierCreateRequest.getName());
         courier.setPassword(passwordEncoder.encode(courierCreateRequest.getPassword()));
         courier.setStatus(CourierStatus.FREE);
+        courier.setDeliveries(Collections.emptyList());
         courier.setRole("ROLE_COURIER");
 
         courierRepository.save(courier);
@@ -48,11 +51,21 @@ public class CourierServiceImpl implements CourierService {
     }
 
     private CourierResponse buildCourierResponse(Courier courier) {
+        List<Delivery> deliveries = courier.getDeliveries();
+        List<DeliveryResponse> deliveryResponses = deliveries.stream()
+                .map(delivery -> DeliveryResponse.builder()
+                        .courierName(courier.getName())
+                        .deliveryCode(delivery.getTrackNo())
+                        .status(delivery.getStatus())
+                        .orderCode(delivery.getOrderCode())
+                        .build())
+                .collect(Collectors.toList());
+
         return CourierResponse.builder()
                 .code(courier.getCode())
                 .name(courier.getName())
-                .status(courier.getStatus())
-                .deliveries(courier.getDeliveries().isEmpty() ? Collections.emptyList() : courier.getDeliveries())
+                .status(courier.getStatus().name())
+                .deliveries(deliveryResponses)
                 .build();
     }
 

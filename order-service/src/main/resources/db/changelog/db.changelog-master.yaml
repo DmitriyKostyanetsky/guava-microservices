@@ -13,3 +13,5 @@ databaseChangeLog:
       file: db/changelog/changeset/modify-password-size-usr.yaml
   - include:
       file: db/changelog/changeset/modify-role-size-usr.yaml
+  - include:
+      file: db/changelog/changeset/add-trackno-delivery-service.yaml

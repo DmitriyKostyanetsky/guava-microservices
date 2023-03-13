@@ -5,6 +5,8 @@ import com.kostyanetskiy.orderservice.dto.OrderRequest;
 import com.kostyanetskiy.orderservice.dto.OrderRequestChange;
 import com.kostyanetskiy.orderservice.dto.OrderResponse;
 import com.kostyanetskiy.orderservice.enums.OrderStatus;
+import com.kostyanetskiy.orderservice.event.OrderPlaceEvent;
+import com.kostyanetskiy.orderservice.event.OrderReceiveEvent;
 import com.kostyanetskiy.orderservice.exception.OrderNotFoundException;
 import com.kostyanetskiy.orderservice.exception.OrderOnDeliveryException;
 import com.kostyanetskiy.orderservice.model.Order;
@@ -12,6 +14,8 @@ import com.kostyanetskiy.orderservice.repository.OrderRepository;
 import com.kostyanetskiy.orderservice.security.PersonDetails;
 import com.kostyanetskiy.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +32,7 @@ import java.util.stream.Collectors;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final KafkaTemplate<String, OrderPlaceEvent> kafkaTemplate;
 
     @Override
     public OrderResponse createOrder(OrderRequestCreate orderRequestCreate) {
@@ -40,15 +45,32 @@ public class OrderServiceImpl implements OrderService {
         order.setCode(code);
         order.setStatus(OrderStatus.CREATED);
         order.setCreatedDate(date);
+        order.setTrackNo("");
 
         PersonDetails principal = getPrincipal();
         order.setUser(principal.getUser());
         orderRepository.save(order);
-
-
-        //TODO send order to delivery service (kafka) el
+        kafkaTemplate.send("orderSend1", new OrderPlaceEvent(
+                order.getCode(),
+                order.getReceiver(),
+                order.getAddress(),
+                order.getItemName()
+        ));
 
         return createResponse(order);
+    }
+
+    @KafkaListener(topics = "orderReceive3",
+            properties = {"spring.json.value.default.type=com.kostyanetskiy.orderservice.event.OrderReceiveEvent"})
+    @Override
+    public void receiveOrder(OrderReceiveEvent orderReceiveEvent) {
+        Optional<Order> optionalOrder = orderRepository.findByCode(orderReceiveEvent.getOrderCode());
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            order.setStatus(OrderStatus.IN_WORK);
+            order.setTrackNo(orderReceiveEvent.getTrackNo());
+            orderRepository.save(order);
+        }
     }
 
     @Override
@@ -83,7 +105,9 @@ public class OrderServiceImpl implements OrderService {
                 .findFirst();
 
         if (orderOptional.isPresent()) {
-            orderOptional.ifPresent(orderRepository::delete);
+            Order order = orderOptional.get();
+            order.setStatus(OrderStatus.CANCEL);
+            orderRepository.save(order);
         }
     }
 
@@ -107,6 +131,8 @@ public class OrderServiceImpl implements OrderService {
                 .receiver(order.getReceiver())
                 .createdDate(order.getCreatedDate())
                 .itemName(order.getItemName())
+                .status(order.getStatus().name())
+                .trackNo(order.getTrackNo())
                 .build();
     }
 

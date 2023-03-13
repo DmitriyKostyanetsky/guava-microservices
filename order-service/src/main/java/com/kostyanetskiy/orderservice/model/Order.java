@@ -22,6 +22,7 @@ public class Order {
     private Long id;
     private String itemName;
     private String code;
+    private String trackNo;
     private String address;
     private String receiver;
     private Date createdDate;

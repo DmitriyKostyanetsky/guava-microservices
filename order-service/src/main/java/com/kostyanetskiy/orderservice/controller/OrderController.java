@@ -39,7 +39,6 @@ public class OrderController {
     @GetMapping(path = "/all")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponse> getOrder() {
-        //TODO get from context
         return orderService.getAllOrders();
     }
 

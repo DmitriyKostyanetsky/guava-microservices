@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-trackno-delivery-service
+      author: d.kostyanetskiy
+      changes:
+        - addColumn:
+            schemaName: public
+            tableName: delivery_order
+            columns:
+              - column:
+                  name: track_no
+                  type: varchar(200)
+

@@ -4,6 +4,7 @@ import com.kostyanetskiy.deliveryservice.dto.DeliveryAssignRequest;
 import com.kostyanetskiy.deliveryservice.dto.DeliveryChangeRequest;
 import com.kostyanetskiy.deliveryservice.dto.DeliveryResponse;
 import com.kostyanetskiy.deliveryservice.service.DeliveryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/delivery")
+@SecurityRequirement(name = "basicAuth")
 @RequiredArgsConstructor
 public class DeliveryController {
 

@@ -3,6 +3,8 @@ package com.kostyanetskiy.deliveryservice.service.impl;
 import com.kostyanetskiy.deliveryservice.dto.*;
 import com.kostyanetskiy.deliveryservice.enums.CourierStatus;
 import com.kostyanetskiy.deliveryservice.enums.DeliveryStatus;
+import com.kostyanetskiy.deliveryservice.event.OrderPlaceEvent;
+import com.kostyanetskiy.deliveryservice.event.OrderReceiveEvent;
 import com.kostyanetskiy.deliveryservice.exception.CourierNotFoundException;
 import com.kostyanetskiy.deliveryservice.exception.DeliveryNotFoundException;
 import com.kostyanetskiy.deliveryservice.model.Courier;
@@ -11,6 +13,8 @@ import com.kostyanetskiy.deliveryservice.repository.CourierRepository;
 import com.kostyanetskiy.deliveryservice.repository.DeliveryRepository;
 import com.kostyanetskiy.deliveryservice.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,22 +32,25 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
     private final CourierRepository courierRepository;
+    private final KafkaTemplate<String, OrderReceiveEvent> kafkaTemplate;
 
-    //TODO Kafka consumer
+    @KafkaListener(topics = "orderSend1",
+            properties = {"spring.json.value.default.type=com.kostyanetskiy.deliveryservice.event.OrderPlaceEvent"})
     @Override
-    public DeliveryResponse create(DeliveryCreateRequest deliveryCreateRequest) {
+    public void create(OrderPlaceEvent orderPlaceEvent) {
         String lUUID = String.format("%040d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
 
         Delivery delivery = new Delivery();
         delivery.setTrackNo(String.format("DLVR%s", lUUID));
-        delivery.setOrderCode(deliveryCreateRequest.getOrderCode());
+        delivery.setOrderCode(orderPlaceEvent.getOrderCode());
         delivery.setStatus(DeliveryStatus.CREATED);
 
         deliveryRepository.save(delivery);
 
         List<Courier> couriers = courierRepository.findAllByStatus(CourierStatus.FREE);
         if (couriers.isEmpty()) {
-            return buildDeliveryResponse(delivery);
+            kafkaTemplate.send("orderReceive3", createReceiveEvent(delivery));
+            return;
         }
 
         Courier courier = couriers.stream()
@@ -53,7 +60,23 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.setCourier(courier);
         delivery.setStatus(DeliveryStatus.ON_DELIVERY);
 
-        return buildDeliveryResponse(delivery);
+        deliveryRepository.save(delivery);
+
+        List<Delivery> deliveries = courier.getDeliveries();
+        deliveries.add(delivery);
+        courier.setDeliveries(deliveries);
+        courierRepository.save(courier);
+
+        kafkaTemplate.send("orderReceive3", createReceiveEvent(delivery));
+    }
+
+    private OrderReceiveEvent createReceiveEvent(Delivery delivery) {
+        return new OrderReceiveEvent(
+                delivery.getTrackNo(),
+                delivery.getOrderCode(),
+                delivery.getCourier() == null ? "" : delivery.getCourier().getName(),
+                delivery.getStatus().name()
+        );
     }
 
     @Override

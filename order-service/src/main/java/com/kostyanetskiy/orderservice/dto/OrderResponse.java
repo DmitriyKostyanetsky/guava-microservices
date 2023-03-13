@@ -14,8 +14,10 @@ import java.sql.Date;
 @NoArgsConstructor
 public class OrderResponse {
     private String code;
+    private String trackNo;
     private String address;
     private String receiver;
+    private String status;
     private Date createdDate;
     private String itemName;
 }

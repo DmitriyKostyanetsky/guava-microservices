@@ -11,6 +11,26 @@ spring:
     hibernate:
       ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: orderSend
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: event:com.kostyanetskiy.orderservice.event.OrderPlaceEvent
+        spring.json.trusted.packages: "com.kostyanetskiy.orderservice.event"
+      retries: 3
+    consumer:
+      group-id: orderReceiveGroupId
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.type.mapping: event:com.kostyanetskiy.orderservice.event.OrderReceiveEvent
+        spring.json.trusted.packages: "com.kostyanetskiy.orderservice.event"
+  application:
+    name: order-service
 server:
   port: 8282
 

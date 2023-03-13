@@ -11,5 +11,25 @@ spring:
     hibernate:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: orderSend
+    consumer:
+      group-id: deliveryGroupId
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.type.mapping: event:com.kostyanetskiy.deliveryservice.event.OrderPlaceEvent
+        spring.json.trusted.packages: "com.kostyanetskiy.deliveryservice.event"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: event:com.kostyanetskiy.deliveryservice.event.OrderReceiveEvent
+        spring.json.trusted.packages: "com.kostyanetskiy.deliveryservice.event"
+      retries: 3
+  application:
+    name: delivery-service
 server:
   port: 8383
