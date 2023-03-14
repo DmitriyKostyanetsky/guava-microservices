@@ -85,6 +85,7 @@ public class DeliveryServiceImpl implements DeliveryService {
         delivery.setStatus(deliveryRequest.getStatus());
 
         deliveryRepository.save(delivery);
+        kafkaTemplate.send("orderReceive3", createReceiveEvent(delivery));
 
         return buildDeliveryResponse(delivery);
     }

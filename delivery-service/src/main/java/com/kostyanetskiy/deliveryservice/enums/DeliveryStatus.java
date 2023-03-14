@@ -1,5 +1,5 @@
 package com.kostyanetskiy.deliveryservice.enums;
 
 public enum DeliveryStatus {
-    CREATED, ON_DELIVERY, CANCEL, FINISHED
+    CREATED, ON_DELIVERY, CANCEL, FINISH
 }

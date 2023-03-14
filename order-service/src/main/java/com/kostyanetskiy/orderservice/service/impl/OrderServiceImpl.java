@@ -6,6 +6,7 @@ import com.kostyanetskiy.orderservice.event.OrderPlaceEvent;
 import com.kostyanetskiy.orderservice.event.OrderReceiveEvent;
 import com.kostyanetskiy.orderservice.exception.OrderNotFoundException;
 import com.kostyanetskiy.orderservice.exception.OrderOnDeliveryException;
+import com.kostyanetskiy.orderservice.exception.UnrecognizedOrderException;
 import com.kostyanetskiy.orderservice.model.Order;
 import com.kostyanetskiy.orderservice.repository.OrderRepository;
 import com.kostyanetskiy.orderservice.security.PersonDetails;
@@ -66,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
         Optional<Order> optionalOrder = orderRepository.findByCode(orderReceiveEvent.getOrderCode());
         if (optionalOrder.isPresent()) {
             Order order = optionalOrder.get();
-            order.setStatus(OrderStatus.IN_WORK);
+            order.setStatus(mapStatus(orderReceiveEvent.getStatus()));
             order.setTrackNo(orderReceiveEvent.getTrackNo());
             orderRepository.save(order);
         }
@@ -155,4 +156,20 @@ public class OrderServiceImpl implements OrderService {
     private PersonDetails getPrincipal() {
         return (PersonDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
+    private OrderStatus mapStatus(String deliveryStatus) {
+        switch (deliveryStatus) {
+            case "CREATED":
+                return OrderStatus.CREATED;
+            case "ON_DELIVERY":
+                return OrderStatus.IN_WORK;
+            case "CANCEL":
+                return OrderStatus.CANCEL;
+            case "FINISH":
+                return OrderStatus.FINISH;
+        }
+
+        throw new UnrecognizedOrderException("Order status not found!");
+    }
+
 }
