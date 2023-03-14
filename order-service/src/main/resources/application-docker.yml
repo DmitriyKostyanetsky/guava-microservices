@@ -3,7 +3,7 @@ spring:
     enabled: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgresql_db/postgres
+    url: jdbc:postgresql://postgres-order/postgres
     username: postgres
     password: postgres
   jpa:
@@ -12,7 +12,7 @@ spring:
       ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: broker:29092
     template:
       default-topic: orderSend
     producer:
@@ -36,6 +36,6 @@ server:
 
 eureka:
   client:
-    serviceUrl.defaultZone: http://localhost:8761/eureka
+    serviceUrl.defaultZone: http://eureka:password@discovery-server:8761/eureka
 
 jwt_secret: ORDERSERVICESECRET
