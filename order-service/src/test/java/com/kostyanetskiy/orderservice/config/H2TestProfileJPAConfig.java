@@ -3,30 +3,35 @@ package com.kostyanetskiy.orderservice.config;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.kostyanetskiy.orderservice.repository"})
-@ComponentScan(basePackages = {"com.kostyanetskiy.orderservice.repository", "com.kostyanetskiy.orderservice.model"})
-public class TestDataConfig {
+@EnableJpaRepositories(basePackages = {
+        "com.kostyanetskiy.orderservice.repository"
+})
+@EnableTransactionManagement
+public class H2TestProfileJPAConfig {
 
     @Bean
-    public DataSource dataSource() throws SQLException {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder.setType(EmbeddedDatabaseType.H2).build();
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.h2.Driver");
+        dataSource.setUrl("jdbc:h2:mem:db;DB_CLOSE_DELAY=-1;MODE=LEGACY");
+        dataSource.setUsername("sa");
+        dataSource.setPassword("sa");
+
+        return dataSource;
     }
 
     @Bean
@@ -57,4 +62,5 @@ public class TestDataConfig {
         propertiesMap.put("hibernate.hbm2ddl.auto", "create-drop");
         return propertiesMap;
     }
+
 }

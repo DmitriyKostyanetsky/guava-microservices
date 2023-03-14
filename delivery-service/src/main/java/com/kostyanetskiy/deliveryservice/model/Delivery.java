@@ -26,4 +26,32 @@ public class Delivery {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "courier_id", referencedColumnName = "id")
     private Courier courier;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Delivery delivery = (Delivery) o;
+
+        if (orderCode != null ? !orderCode.equals(delivery.orderCode) : delivery.orderCode != null) return false;
+        return trackNo != null ? trackNo.equals(delivery.trackNo) : delivery.trackNo == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = orderCode != null ? orderCode.hashCode() : 0;
+        result = 31 * result + (trackNo != null ? trackNo.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + id +
+                ", orderCode='" + orderCode + '\'' +
+                ", trackNo='" + trackNo + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

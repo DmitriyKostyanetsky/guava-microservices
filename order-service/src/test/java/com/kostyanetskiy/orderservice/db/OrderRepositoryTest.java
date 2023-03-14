@@ -1,6 +1,7 @@
 package com.kostyanetskiy.orderservice.db;
 
 import com.kostyanetskiy.orderservice.OrderServiceApplication;
+import com.kostyanetskiy.orderservice.config.H2TestProfileJPAConfig;
 import com.kostyanetskiy.orderservice.enums.OrderStatus;
 import com.kostyanetskiy.orderservice.model.Order;
 import com.kostyanetskiy.orderservice.model.User;
@@ -8,15 +9,20 @@ import com.kostyanetskiy.orderservice.repository.OrderRepository;
 import com.kostyanetskiy.orderservice.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = OrderServiceApplication.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {
+        OrderServiceApplication.class,
+        H2TestProfileJPAConfig.class})
 public class OrderRepositoryTest {
 
     @Autowired
