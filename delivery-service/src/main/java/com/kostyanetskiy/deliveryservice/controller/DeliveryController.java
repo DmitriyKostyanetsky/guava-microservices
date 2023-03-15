@@ -81,7 +81,7 @@ public class DeliveryController {
                             schema = @Schema(implementation = DeliveryResponse.class)) }),
             @ApiResponse(responseCode = "404", description = "Courier not found",
                     content = @Content) })
-    @GetMapping("/allByCourier")
+        @GetMapping("/allByCourier")
     @ResponseStatus(HttpStatus.OK)
     public List<DeliveryResponse> getAllByCourier(@RequestParam String courierCode) {
         return deliveryService.allDeliveriesByCourier(courierCode);

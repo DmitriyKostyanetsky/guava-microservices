@@ -1,5 +1,6 @@
 package com.kostyanetskiy.orderservice;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @EnableEurekaClient
+@OpenAPIDefinition
 public class OrderServiceApplication {
 
     public static void main(String[] args) {

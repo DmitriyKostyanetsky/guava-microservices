@@ -1,0 +1,578 @@
+{
+	"info": {
+		"_postman_id": "993b6ea9-868a-43eb-b9ee-cbdcad9ca7fa",
+		"name": "Guava",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19166378"
+	},
+	"item": [
+		{
+			"name": "OrderService",
+			"item": [
+				{
+					"name": "AuthController",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"Dmitriy2\",\n    \"password\" : \"123\",\n    \"phone\" : \"899035923\",\n    \"email\" : \"fuckoff02@mail.ru\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/auth/registration",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"registration"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\" : \"Dmitriy2\",\n    \"password\" : \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "OrderController",
+					"item": [
+						{
+							"name": "Create Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJvcmRlci1zZXJ2aWNlIiwiZXhwIjoxNjc4ODIzNDQ1LCJpYXQiOjE2Nzg4MTk4NDUsInVzZXJuYW1lIjoiRG1pdHJpeTIifQ.EFSRNMC-vxkAR9N_F-Bd-8tly3M13oOBJ6bIf7hTCNg",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"itemName\" : \"iphone22\",\n    \"address\"  : \"Moscow street Vavilova\",\n    \"receiver\" : \"Kostyanetksiy Maria\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/order/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJvcmRlci1zZXJ2aWNlIiwiZXhwIjoxNjc4NTUxMTEzLCJpYXQiOjE2Nzg1NDc1MTMsInVzZXJuYW1lIjoiRG1pdHJpeSJ9.teK9lkv816_fD_U-y2--YwI1nACi89BRcf4S_95thsU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\" : \"49b02c26-38c6-4a7b-831c-d41847b7fde3\",\n    \"address\"  : \"Moscow street Cheremushkiy 34\",\n    \"receiver\" : \"Kostyanetksiy Maria Vladimirovna\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/order/change",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"change"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Order",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJvcmRlci1zZXJ2aWNlIiwiZXhwIjoxNjc4NTUxMTEzLCJpYXQiOjE2Nzg1NDc1MTMsInVzZXJuYW1lIjoiRG1pdHJpeSJ9.teK9lkv816_fD_U-y2--YwI1nACi89BRcf4S_95thsU",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"code\" : \"5825402c-418c-41c3-bee4-015de77b614c\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/order/remove",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"remove"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJvcmRlci1zZXJ2aWNlIiwiZXhwIjoxNjc4ODgwMTc4LCJpYXQiOjE2Nzg4NzY1NzgsInVzZXJuYW1lIjoiRG1pdHJpeTIifQ.LUHLBXTi9NFjs7n-XQ11SKSi8e_QYW7tlbKxrGVaRM8",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8181/api/v1/order/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get order by track no",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJVc2VyIGRldGFpbHMiLCJpc3MiOiJvcmRlci1zZXJ2aWNlIiwiZXhwIjoxNjc4NzA0Mjc3LCJpYXQiOjE2Nzg3MDA2NzcsInVzZXJuYW1lIjoiRG1pdHJpeSJ9.W4tYtDv_AyhATz5dfhpXJCWGZtTgRcjRTRxmwsMvu-s",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8181/api/v1/order/track?trackNo=DLVR0235867414410217202589091962001810368552",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"order",
+										"track"
+									],
+									"query": [
+										{
+											"key": "trackNo",
+											"value": "DLVR0235867414410217202589091962001810368552"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "DeliveryService",
+			"item": [
+				{
+					"name": "CourierController",
+					"item": [
+						{
+							"name": "All couriers",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8181/api/v1/courier/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"courier",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create courier",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Sergey\",\n  \"password\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/courier/create",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"courier",
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DeliveryController",
+					"item": [
+						{
+							"name": "All deliveries",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8181/api/v1/delivery/all",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"delivery",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change delivery status",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\" : \"CANCEL\",\n    \"trackNo\": \"DLVR0092741184161197234557051561289184557999\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/delivery/change",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"delivery",
+										"change"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign delivery on courier Copy",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"deliveryCode\" : \"DLVR0092741184161197234557051561289184557999\",\n    \"courierCode\": \"COUR0020903591821887399223797491609680267162\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8181/api/v1/delivery/assign",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"delivery",
+										"assign"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Delivery by track no",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8181/api/v1/delivery/track?trackNo=DLVR0101931928478815810219110061098041287178",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"delivery",
+										"track"
+									],
+									"query": [
+										{
+											"key": "trackNo",
+											"value": "DLVR0101931928478815810219110061098041287178"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All deliveries By courier",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "password",
+											"value": "admin",
+											"type": "string"
+										},
+										{
+											"key": "username",
+											"value": "admin",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8181/api/v1/delivery/allByCourier?courierCode=COUR0020903591821887399223797491609680267162",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8181",
+									"path": [
+										"api",
+										"v1",
+										"delivery",
+										"allByCourier"
+									],
+									"query": [
+										{
+											"key": "courierCode",
+											"value": "COUR0020903591821887399223797491609680267162"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -36,9 +36,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.hamcrest:hamcrest-all:1.1'
-// https://mvnrepository.com/artifact/com.h2database/h2
     testImplementation group: 'com.h2database', name: 'h2', version: '2.1.214'
-
     testImplementation 'junit:junit:4.12'
 }
 

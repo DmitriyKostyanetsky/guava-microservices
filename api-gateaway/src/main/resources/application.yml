@@ -30,3 +30,5 @@ spring:
 logging.level.root: INFO
 logging.level.org.springframework.cloud.gateway.route.RouteDefinitionLocator: INFO
 logging.level.org.springframework.cloud.gateway: TRACE
+server:
+  port: 8181
