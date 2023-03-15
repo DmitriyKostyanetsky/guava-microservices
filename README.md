@@ -1,4 +1,4 @@
-####Запуск всего приложения в докере:
+#### Запуск всего приложения в докере:
 В корне проекта /IdeaProjects/guava-microservices$ выполнить 
 * docker compose up -d
 * eureka server доступен по http://localhost:8181/eureka/web
@@ -6,7 +6,7 @@
 Для тестирования приложения в корне лежит коллекция вызовов для postman(Guava.postman_collection.json). 
 Ее можно импортировать.
 
-####Запуск приложения локально и поднятие в докере postgres и кластер кафки
+#### Запуск приложения локально и поднятие в докере postgres и кластер кафки:
 Так же в корне проекта ~/IdeaProjects/guava-microservices$ 
 * docker compose -f docker-compose-db-and-kafka.yml up -d
 * eureka server доступен по http://localhost:8181/eureka/web
